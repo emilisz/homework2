@@ -9,7 +9,7 @@ class Shipping implements CostInterface
     public function __construct(private float $shipping, private CostInterface $baseCost, $shippingProvider = null)
     {
     }
-    public function cost()
+    public function cost(): float
     {
         return $this->shipping + $this->baseCost->cost();
     }

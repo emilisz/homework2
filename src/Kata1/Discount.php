@@ -10,7 +10,7 @@ class Discount implements CostInterface
     {
     }
 
-    public function cost()
+    public function cost(): float
     {
         return (1 - $this->discount/100) * $this->basePrice->cost();
     }

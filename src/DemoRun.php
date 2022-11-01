@@ -10,53 +10,34 @@ use App\Kata1\Shipping;
 use App\Kata2\PriceCalculatorInterface;
 use App\Kata3\DiscountStrategy;
 use App\Kata4\DpdShippingProvider;
+use App\Kata4\ShippingInterface;
 
 class DemoRun
 {
     private bool $isTuesday = false;
 
-    public function kata1()
+    public function kata1():float
     {
-        // shipping = 8;
-        // discount = 20;
-        // new Price(100);
-
-//        dekoratorius*
-        $result = new Shipping(8, new Discount(20, new Price(100)));
-        return $result->cost();
-//        return 88;
+        return (new Shipping(8, new Discount(20, new Price(100))))->cost();
     }
 
     public function kata2(PriceCalculatorInterface $calculator)
     {
-        // shipping = 8;
-        // discount = 20;
-        // new Price(100);
-
-        return $calculator->calculate(100, 20, 8);
-//        return 88;
+        return $calculator->calculate(new Price(100), 20, 8);
     }
 
-    public function kata3()
+    public function kata3():float
     {
-        // shipping = 8;
-        // discount = 20;
-        // new Price(100);
-
-        $chooseBetweenShipping = new DiscountStrategy(self::isTuesday());
-        return $chooseBetweenShipping->selectShippingStrategy()->calculate(100, 20, 8);
-//        return 80;
+        return (new DiscountStrategy($this->isTuesday()))
+            ->selectShippingStrategy()
+            ->calculate(new Price(100), 20, 8);
     }
 
-    public function kata4()
+    public function kata4(ShippingInterface $providerClass):float
     {
-        // shipping = 8;
-        // discount = 20;
-        // new Price(100);
-
-        $chooseBetweenShipping = new DiscountStrategy(self::isTuesday());
-        return $chooseBetweenShipping->selectShippingStrategy(new DpdShippingProvider())->calculate(100, 20, 8);
-//        return 84;
+        return (new DiscountStrategy())
+            ->selectShippingStrategy($providerClass)
+            ->calculate(new Price(100), 20, 8);
     }
 
     /**

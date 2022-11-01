@@ -7,6 +7,8 @@ namespace Test\Unit;
 use App\DemoRun;
 use App\Kata2\FreeShippingCalculator;
 use App\Kata2\PriceCalculator;
+use App\Kata4\DpdShippingProvider;
+use App\Kata4\VenipakShippingProvider;
 
 class DemoRunTest extends \PHPUnit\Framework\TestCase
 {
@@ -36,6 +38,7 @@ class DemoRunTest extends \PHPUnit\Framework\TestCase
 
     public function testKata4(): void
     {
-        $this->assertEquals(84, $this->runner->kata4());
+        $this->assertEquals(84, $this->runner->kata4(new DpdShippingProvider()));
+        $this->assertEquals(120, $this->runner->kata4(new VenipakShippingProvider()));
     }
 }
