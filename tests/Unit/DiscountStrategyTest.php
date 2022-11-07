@@ -8,20 +8,37 @@ use PHPUnit\Framework\TestCase;
 
 class DiscountStrategyTest extends TestCase
 {
+    /**
+     * @dataProvider dataProvider
+     * **/
 
-    public function test_selects_free_shipping_if_tuesday(): void
+    public function testSelectsFreeShippingIfConcreteDay($isTuesday, $result, float $price, float $discount, float $tax): void
     {
 
-        $calculator = (new DiscountStrategy(true))->selectShippingStrategy();
+        $calculator = (new DiscountStrategy($isTuesday))->selectShippingStrategy();
 
-        $this->assertEquals(80, $calculator->calculate(new Price(100), 20, 8));
+        $this->assertEquals($result, $calculator->calculate(new Price($price), $discount, $tax));
     }
 
-    public function test_selects_no_free_shipping_if_not_tuesday(): void
+
+    public function dataProvider(): \Generator
     {
+        yield 'test 1' =>
+        [
+            'isTuesday' => false,
+            'result' => 88,
+            'price' => 100,
+            'discount' => 20,
+            'tax' => 8
+        ];
 
-        $calculator = (new DiscountStrategy(false))->selectShippingStrategy();
-
-        $this->assertEquals(88, $calculator->calculate(new Price(100), 20, 8));
+        yield 'test 2' =>
+        [
+            'isTuesday' => true,
+            'result' => 80,
+            'price' => 100,
+            'discount' => 20,
+            'tax' => 8
+        ];
     }
 }

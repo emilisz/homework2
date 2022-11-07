@@ -18,4 +18,5 @@ class FreeShippingCalculator implements PriceCalculatorInterface
         $totalPrice =  (new Shipping(self::FREE_TAX_RATE, new Discount($discount, $price)));
         return $totalPrice->cost();
     }
+
 }
